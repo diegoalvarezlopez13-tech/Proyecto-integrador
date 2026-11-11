@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SIGCEM - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Iconos de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><i class="bi bi-building"></i> SIGCEM - Sistema de Gestión</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Formulario -->
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Agregar Nuevo Registro</h4>
+                        <form action="/agregar" method="POST">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Nombre:</label>
+                                <input type="text" name="nombre" class="form-control" required placeholder="Ej: Juan Pérez">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Correo:</label>
+                                <input type="email" name="correo" class="form-control" required placeholder="ejemplo@correo.com">
+                            </div>
+                            <button type="submit" class="btn btn-success w-100 fw-bold"><i class="bi bi-save"></i> Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de datos -->
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Lista de Registros</h4>
+                        <table class="table table-hover align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Estado</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for registro in registros %}
+                                <tr>
+                                    <td>{{ registro[0] }}</td>
+                                    <td>{{ registro[1] }}</td>
+                                    <td>{{ registro[2] }}</td>
+                                    <td>
+                                        {% if registro[3] == 'Completado' %}
+                                            <span class="badge bg-success">Completado</span>
+                                        {% else %}
+                                            <span class="badge bg-warning text-dark">Pendiente</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <!-- Botón Completar -->
+                                        {% if registro[3] == 'Pendiente' %}
+                                        <a href="/completar/{{ registro[0] }}" class="btn btn-sm btn-outline-primary" title="Marcar como completado">
+                                            <i class="bi bi-check-circle"></i>
+                                        </a>
+                                        {% endif %}
+                                        <!-- Botón Eliminar -->
+                                        <a href="/eliminar/{{ registro[0] }}" class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="return confirm('¿Seguro que quieres eliminar este registro?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if not registros %}
+                        <div class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-1"></i>
+                            <p>No hay registros aún. ¡Agrega el primero!</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
