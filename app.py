@@ -139,4 +139,9 @@ def exportar():
 
 if __name__ == '__main__':
     init_db()
+<<<<<<< HEAD
     app.run(debug=True) 
+=======
+    app.run(debug=True)
+    # Revision final para Qodo
+>>>>>>> eb21aebf79a2dac992e9443eca9530a217178cf8
