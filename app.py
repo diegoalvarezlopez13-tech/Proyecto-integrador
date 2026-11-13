@@ -138,10 +138,7 @@ def exportar():
     return Response(output, mimetype="text/csv", headers={"Content-Disposition":"attachment;filename=registros_sigcem.csv"})
 
 if __name__ == '__main__':
-    init_db()
-<<<<<<< HEAD
-    app.run(debug=True) 
-=======
+    init_db() 
     app.run(debug=True)
     # Revision final para Qodo
->>>>>>> eb21aebf79a2dac992e9443eca9530a217178cf8
+
